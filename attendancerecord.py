@@ -1,0 +1,55 @@
+import tkinter as tk
+# Attendance records list
+attendance_records = []
+def submit_attendance():
+    attendance_data = {}
+    attendance_data["class"] = class_entry.get()
+    attendance_data["date"] = date_entry.get()
+    attendance_data["faculty"] = faculty_entry.get()
+    attendance_data["attendance"] = attendance_entry.get("1.0", tk.END)
+    attendance_records.append(attendance_data)
+    class_entry.delete(0, tk.END)
+    date_entry.delete(0, tk.END)
+    faculty_entry.delete(0, tk.END)
+    attendance_entry.delete("1.0", tk.END)
+def show_records():
+    records_window = tk.Toplevel(root)
+    records_window.title("Attendance Records")
+    records_window.configure(bg="#efcfe3")
+    records_frame = tk.Frame(records_window, bg="#fbe7ef", padx=20, pady=20)
+    records_frame.pack()
+    records_label = tk.Label(records_frame, text="Attendance Records:", bg="#fbe7ef")
+    records_label.grid(row=0, column=0)
+    records_text = tk.Text(records_frame, height=10, width=50)
+    records_text.grid(row=1, column=0)
+    
+    for record in attendance_records:
+        records_text.insert(tk.END, f"Class: {record['class']}\nDate: {record['date']}\nFaculty: {record['faculty']}\nAttendance: {record['attendance']}\n\n")
+root = tk.Tk()
+root.title("Attendance System")
+root.configure(bg="#efcfe3")
+attendance_frame = tk.Frame(root, bg="#fbe7ef", padx=20, pady=20)
+attendance_frame.pack()
+class_label = tk.Label(attendance_frame, text="Class:", bg="#fbe7ef")
+class_label.grid(row=0, column=0)
+class_entry = tk.Entry(attendance_frame, width=50)
+class_entry.grid(row=0, column=1)
+date_label = tk.Label(attendance_frame, text="Date:", bg="#fbe7ef")
+date_label.grid(row=1, column=0)
+date_entry = tk.Entry(attendance_frame, width=50)
+date_entry.grid(row=1, column=1)
+faculty_label = tk.Label(attendance_frame, text="Faculty:", bg="#fbe7ef")
+faculty_label.grid(row=2, column=0)
+faculty_entry = tk.Entry(attendance_frame, width=50)
+faculty_entry.grid(row=2, column=1)
+
+attendance_label = tk.Label(attendance_frame, text="Attendance:", bg="#fbe7ef")
+attendance_label.grid(row=3, column=0)
+attendance_entry = tk.Text(attendance_frame, height=10, width=50)
+attendance_entry.grid(row=4, column=0, columnspan=2)
+submit_button = tk.Button(attendance_frame, text="Submit", bg="#be5683", fg="white",command=submit_attendance)
+submit_button.grid(row=5, column=0, pady=10)
+
+show_records_button = tk.Button(attendance_frame, text="Show Records", bg="#be5683",fg="white", command=show_records)
+show_records_button.grid(row=3, column=0, pady=10)
+root.mainloop()
